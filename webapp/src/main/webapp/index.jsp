@@ -1,119 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>3D Personal Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <title>Mayur Dalimbkar | Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            height: 100vh;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
-            color: white;
-        }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: black;
+    }
 
-        .container {
-            display: flex;
-            height: 100vh;
-            width: 100%;
-            padding: 2rem;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-        }
+    #bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
 
-        .avatar {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle at center, #0ff 10%, #00f 80%);
-            border-radius: 50%;
-            box-shadow: 0 0 60px rgba(0, 255, 255, 0.5);
-            animation: float 6s ease-in-out infinite;
-            transform-style: preserve-3d;
-        }
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #00ffff;
+      text-align: center;
+      z-index: 1;
+      backdrop-filter: blur(10px);
+      background: rgba(0, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotateY(0deg); }
-            50% { transform: translateY(-20px) rotateY(180deg); }
-        }
+    .overlay h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            width: 300px;
-            margin: 1rem;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-        }
+    .overlay p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
 
-        .glass-card:hover {
-            transform: scale(1.05) rotateY(5deg);
-        }
+    .overlay button {
+      margin-top: 2rem;
+      padding: 10px 30px;
+      font-size: 1rem;
+      color: black;
+      background-color: #00ffff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        h2 {
-            color: #00ffff;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1rem;
-            color: #ccc;
-        }
-
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            animation: moveStars 100s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes moveStars {
-            0% { background-position: 0 0; }
-            100% { background-position: 10000px 10000px; }
-        }
-    </style>
+    .overlay button:hover {
+      background-color: #00cccc;
+    }
+  </style>
 </head>
 <body>
-    <div class="stars"></div>
-    <div class="container">
-        <div class="avatar"></div>
-        <div class="cards">
-            <div class="glass-card">
-                <h2>About Me</h2>
-                <p>I'm a creative developer with a focus on 3D UI, animations, and immersive user experiences.</p>
-            </div>
-            <div class="glass-card">
-                <h2>Skills</h2>
-                <p>HTML, CSS, JavaScript, Three.js, GSAP, Blender, WebGL</p>
-            </div>
-            <div class="glass-card">
-                <h2>Projects</h2>
-                <p>Interactive 3D portfolios, animated websites, and immersive story-driven pages.</p>
-            </div>
-            <div class="glass-card">
-                <h2>Contact</h2>
-                <p>Email: yourname@example.com<br>Phone: +91-1234567890</p>
-            </div>
-        </div>
-    </div>
+  <canvas id="bg"></canvas>
+
+  <div class="overlay">
+    <h1>Mayur Dalimbkar</h1>
+    <p>DevOps Engineer | Cloud | Automation | SRE</p>
+    <button>Explore Portfolio</button>
+  </div>
+
+  <!-- THREE.JS via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Add stars
+    const starGeo = new THREE.BufferGeometry();
+    const starCount = 1000;
+    const positions = [];
+
+    for (let i = 0; i < starCount; i++) {
+      positions.push((Math.random() - 0.5) * 2000);
+      positions.push((Math.random() - 0.5) * 2000);
+      positions.push((Math.random() - 0.5) * 2000);
+    }
+
+    starGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+
+    const starMat = new THREE.PointsMaterial({
+      color: 0x00ffff,
+      size: 1,
+      transparent: true,
+      opacity: 0.7,
+    });
+
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
+
+    camera.position.z = 1;
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      stars.rotation.y += 0.0005;
+      stars.rotation.x += 0.0003;
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
 </body>
 </html>
