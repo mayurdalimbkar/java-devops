@@ -3,121 +3,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mayur Dalimbkar - Portfolio</title>
+    <title>Mayur Dalimbkar - DevOps Portfolio</title>
     <style>
+        :root {
+            --primary: #00e6e6;
+            --bg-dark: #0d0d0d;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: #111;
-            color: #fff;
+            background: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         nav {
-            background: #222;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
             z-index: 1000;
+            border-bottom: 1px solid #222;
         }
 
         nav h1 {
-            color: #00e6e6;
+            color: var(--primary);
+            font-size: 1.5rem;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
 
         nav ul li a {
-            color: white;
             text-decoration: none;
+            color: white;
+            font-weight: 500;
             transition: 0.3s;
         }
 
         nav ul li a:hover {
-            color: #00e6e6;
+            color: var(--primary);
         }
 
         section {
             padding: 4rem 2rem;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: auto;
         }
 
         .hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             text-align: center;
-            animation: fadeIn 2s ease-in-out;
+            padding: 6rem 1rem;
+            animation: fadeIn 1s ease;
         }
 
         .hero h2 {
-            font-size: 2.5rem;
-            color: #00e6e6;
-            animation: slideIn 1.5s ease-out;
+            font-size: 3rem;
+            color: var(--primary);
         }
 
         .hero p {
-            font-size: 1.2rem;
             margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #ccc;
         }
 
-        .about {
-            background: #1a1a1a;
-            border-left: 5px solid #00e6e6;
-            padding-left: 1.5rem;
-            animation: fadeInUp 1s ease forwards;
+        .glass-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border: 1px solid #222;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s ease;
         }
 
-        .skills h2 {
+        .glass-card:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
             margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: var(--primary);
         }
 
-        .bar {
+        .skills .bar {
             margin-bottom: 1rem;
         }
 
-        .bar span {
+        .skills .bar span {
             display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
         }
 
-        .bar .progress {
+        .skills .progress {
             background: #333;
-            border-radius: 20px;
+            border-radius: 50px;
             overflow: hidden;
         }
 
-        .bar .progress div {
-            height: 15px;
-            background: #00e6e6;
+        .skills .progress div {
+            height: 14px;
+            background: var(--primary);
             width: 0;
-            animation: fillBar 2s forwards;
-        }
-
-        .projects .card {
-            background: #222;
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1rem 0;
-            transition: transform 0.3s;
-        }
-
-        .projects .card:hover {
-            transform: scale(1.05);
+            animation: grow 2s forwards;
+            border-radius: 50px;
         }
 
         .contact form {
@@ -126,23 +132,24 @@
             gap: 1rem;
         }
 
-        .contact input, .contact textarea {
-            padding: 0.8rem;
+        .contact input,
+        .contact textarea {
+            background: #222;
             border: none;
-            border-radius: 5px;
-            background: #333;
+            padding: 1rem;
             color: white;
+            border-radius: 10px;
         }
 
         .contact button {
-            padding: 0.8rem;
-            background: #00e6e6;
-            color: black;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+            background: var(--primary);
+            color: #000;
+            padding: 0.8rem 1.2rem;
             font-weight: bold;
-            transition: 0.3s;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
         }
 
         .contact button:hover {
@@ -152,32 +159,33 @@
         footer {
             text-align: center;
             padding: 2rem;
-            background: #111;
-            color: #888;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            font-size: 0.9rem;
+            color: #aaa;
+            background: #0d0d0d;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeInUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes fillBar {
+        @keyframes grow {
             to { width: 90%; }
         }
 
         .skills .bar:nth-child(2) .progress div { animation-delay: 0.2s; width: 85%; }
         .skills .bar:nth-child(3) .progress div { animation-delay: 0.4s; width: 80%; }
         .skills .bar:nth-child(4) .progress div { animation-delay: 0.6s; width: 70%; }
+
+        @media screen and (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -194,16 +202,16 @@
 </nav>
 
 <section class="hero" id="hero">
-    <h2>👋 Hi, I'm Mayur</h2>
-    <p>A passionate DevOps Engineer building modern infrastructure solutions</p>
+    <h2>🚀 DevOps Engineer</h2>
+    <p>Crafting scalable, automated, and resilient infrastructure</p>
 </section>
 
-<section class="about" id="about">
+<section id="about" class="glass-card">
     <h2>About Me</h2>
-    <p>I’m a results-driven engineer with a passion for automation, cloud technologies, and CI/CD pipelines. With a solid foundation in Azure and AWS, I thrive on solving complex infrastructure problems efficiently.</p>
+    <p>Hi, I’m Mayur — passionate about automation, cloud, and delivery pipelines. With solid experience in Azure, AWS, and DevOps tools, I help build high-performance infrastructure with a focus on security and scalability.</p>
 </section>
 
-<section class="skills" id="skills">
+<section class="skills glass-card" id="skills">
     <h2>Skills</h2>
     <div class="bar">
         <span>Terraform</span>
@@ -224,18 +232,21 @@
 </section>
 
 <section class="projects" id="projects">
-    <h2>Projects</h2>
-    <div class="card">
-        <h3>CI/CD Pipeline with Jenkins & Kubernetes</h3>
-        <p>Automated the deployment of microservices using Jenkins pipelines and Kubernetes clusters on AWS EKS.</p>
-    </div>
-    <div class="card">
-        <h3>Terraform Infrastructure on Azure</h3>
-        <p>Built modular Terraform scripts for provisioning VMs, VNets, and AKS with remote state in Azure Storage.</p>
+    <div class="glass-card">
+        <h2>Projects</h2>
+        <div>
+            <h3>🌐 CI/CD with Jenkins & Kubernetes</h3>
+            <p>Built automated pipelines for microservices using Jenkins, Docker, and Kubernetes across cloud platforms.</p>
+        </div>
+        <br>
+        <div>
+            <h3>☁️ Infra Provisioning with Terraform</h3>
+            <p>Designed reusable Terraform modules to provision Azure and AWS resources with state stored remotely.</p>
+        </div>
     </div>
 </section>
 
-<section class="contact" id="contact">
+<section class="contact glass-card" id="contact">
     <h2>Contact Me</h2>
     <form method="post" action="#">
         <input type="text" name="name" placeholder="Your Name" required/>
@@ -246,7 +257,7 @@
 </section>
 
 <footer>
-    <p>© 2025 Mayur Dalimbkar • DevOps Engineer</p>
+    <p>© 2025 Mayur Dalimbkar | DevOps Engineer | All rights reserved.</p>
 </footer>
 
 </body>
